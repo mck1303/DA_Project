@@ -10,8 +10,8 @@ parameters{
 }
 
 model{
-    mu ~ normal(174,10);
-    sigma ~ normal(78,10);    
+    mu ~ normal(174,4);
+    sigma ~ normal(78,4);    
     probs ~ normal(mu,sigma);
 
 }
