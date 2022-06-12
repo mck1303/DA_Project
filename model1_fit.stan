@@ -17,5 +17,10 @@ model{
 }
 
 generated quantities {
-    real prob = normal_rng(mu,sigma);
+    vector[N] log_lik;
+    array[N] real prob;
+    for (j in 1:N){
+        log_lik[j] = normal_lpdf(probs[j]|mu,sigma);
+        prob[j] = normal_rng(mu,sigma);
+    }
 }
