@@ -11,16 +11,15 @@ parameters{
 
 model{
     mu ~ normal(174,4);
-    sigma ~ normal(78,4);    
+    sigma ~ lognormal(4.4,0.04);    
     probs ~ normal(mu,sigma);
 
 }
 
 generated quantities {
-    vector[N] log_lik;
-    array[N] real prob;
-    for (j in 1:N){
-        log_lik[j] = normal_lpdf(probs[j]|mu,sigma);
-        prob[j] = normal_rng(mu,sigma);
-    }
+    real log_lik;
+    real prob;
+    log_lik = normal_lpdf(probs|mu,sigma);
+    prob = normal_rng(mu,sigma);
+ 
 }
