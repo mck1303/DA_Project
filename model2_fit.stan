@@ -6,7 +6,7 @@ data{
 parameters{
     real mu;
     real nu;
-    real sigma;
+    real<lower=0> sigma;
 }
 
 
@@ -19,11 +19,13 @@ model{
 }
 
 generated quantities {
-    real log_lik;
-    real prob;
-    prob = normal_rng(mu,sigma);
+    vector[N] log_lik;
+    vector[N] prob;
     
-    log_lik = student_t_lpdf(probs|nu,mu,sigma);
+    for (i in 1:N){
+        log_lik[i] = student_t_lpdf(probs[i]|nu,mu,sigma);
+        prob[i] = student_t_rng(nu,mu,sigma);
+    }
     
 
 }
